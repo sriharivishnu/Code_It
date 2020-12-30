@@ -1,5 +1,5 @@
 import "./App.css";
-import NavBar from "./component/NavBar/NavBar";
+import NavBar from "./component/NavBar/";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import Community from "./pages/Community";
@@ -11,9 +11,9 @@ const App = () => {
       <div className="App">
         <NavBar />
         <Switch>
+          <Route path="/" exact component={Home} />
           <Route path="/explore" component={Explore} />
           <Route path="/community" component={Community} />
-          <Route path="/" exact component={Home} />
         </Switch>
       </div>
     </Router>

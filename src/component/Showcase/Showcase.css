@@ -1,0 +1,25 @@
+.showcase-background {
+  background: #111115;
+  height: 40rem;
+  text-align: center;
+}
+.showcase-image {
+  position: relative;
+  padding: 1rem;
+  margin: 1rem;
+  border: solid 1px white;
+  border-radius: 16px;
+  margin: auto;
+  margin-top: 30px;
+  background: rgb(117, 117, 194);
+}
+.showcase-title {
+  margin: 1rem;
+  color: white;
+  font-size: 2rem;
+}
+.showcase-description {
+  margin: 1rem;
+  color: white;
+  font-size: 1rem;
+}

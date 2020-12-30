@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import logo from "../../img/logo.png";
 import { MenuItems } from "./NavBarItems/MenuBarItems";
-import { Button } from "../Button/Button";
+import Button from "../Button/";
 import "./NavBar.css";
 const NavBar = () => {
   const [clicked, setClicked] = useState(false);

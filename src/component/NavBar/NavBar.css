@@ -177,7 +177,7 @@
     transition: 250ms;
   }
 
-  Button {
+  .account-status {
     display: none;
   }
 }
