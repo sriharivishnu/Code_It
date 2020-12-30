@@ -1,14 +1,23 @@
 import "./App.css";
-import MenuBar from "./component/MenuBar/";
+import NavBar from "./component/NavBar/NavBar";
+import Home from "./pages/Home";
+import Explore from "./pages/Explore";
+import Community from "./pages/Community";
 
-function App() {
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <MenuBar></MenuBar>
-      </header>
-    </div>
+    <Router>
+      <div className="App">
+        <NavBar />
+        <Switch>
+          <Route path="/explore" component={Explore} />
+          <Route path="/community" component={Community} />
+          <Route path="/" exact component={Home} />
+        </Switch>
+      </div>
+    </Router>
   );
-}
+};
 
 export default App;
