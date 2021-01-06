@@ -8,18 +8,10 @@ function User(user) {
   this.hashed_password = user.hashed_password;
 }
 
-User.create = (newUser, result) => {
+User.create = (newUser) => {
   with (newUser) {
     const QUERY = `INSERT INTO ${USERS_TABLE} (uid, username, email, password_hash) VALUES (UUID_TO_BIN('${uid}'), '${username}', '${email}', '${hashed_password}')`;
-    sql.query(QUERY, (err, res) => {
-      if (err) {
-        console.log("Error: ", err);
-        result(err, null);
-        return;
-      }
-      console.log("Created user: ", res);
-      result(null, res);
-    });
+    return sql.query(QUERY);
   }
 };
 

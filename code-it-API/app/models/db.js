@@ -1,6 +1,8 @@
 const mysql = require("mysql");
 const dbConfig = require("../config/db.config");
-
+/*
+Mysql Database wrapper to allow for promises
+*/
 class Database {
   constructor(config) {
     this.connection = mysql.createConnection({
@@ -38,4 +40,8 @@ class Database {
 }
 const database = new Database(dbConfig);
 database.connect();
+const getDb = () => {
+  return database;
+};
 module.exports = database;
+// exports.getDb = getDb;
