@@ -1,6 +1,7 @@
 const { v1: uuidv1 } = require("uuid");
 const User = require("../models/user.model");
 const { registerValidation, loginValidation } = require("../util/validation");
+const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
 /*
@@ -43,7 +44,7 @@ exports.register = async (req, res) => {
     });
   });
   if (!userRes) return;
-  res.status(200).send({ user: uid });
+  res.status(200).send({ uid: uid });
 };
 
 /*
@@ -84,6 +85,9 @@ exports.login = async (req, res) => {
 
   //Check if passwords match
   let authenticated = await bcrypt.compare(req.body.password, user.password_hash);
-  if (authenticated) res.status(200).send({ message: "Authenticated!" });
-  else res.status(401).send({ message: "Incorrect username or password" });
+  if (!authenticated) res.status(401).send({ message: "Incorrect email/username or password" });
+
+  //Create session token
+  const token = jwt.sign({ uid: user.uid }, process.env.TOKEN_SECRET);
+  res.header("auth-token", token).send(token);
 };

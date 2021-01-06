@@ -1,5 +1,4 @@
 const mysql = require("mysql");
-const dbConfig = require("../config/db.config");
 /*
 Mysql Database wrapper to allow for promises
 */
@@ -38,7 +37,12 @@ class Database {
     });
   }
 }
-const database = new Database(dbConfig);
+const database = new Database({
+  HOST: process.env.DB_HOST,
+  USER: process.env.DB_USER,
+  PASSWORD: process.env.DB_PASSWORD,
+  DB: process.env.DB_NAME,
+});
 database.connect();
 const getDb = () => {
   return database;
