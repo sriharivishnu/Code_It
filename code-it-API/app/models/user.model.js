@@ -35,6 +35,7 @@ User.findByEmail = (email) => {
 
 User.findByUID = (userID) => {
   const QUERY = `${SELECT_USER} FROM ${USERS_TABLE} WHERE uid = UUID_TO_BIN('${userID}')`;
+  console.log(QUERY);
   return sql.query(QUERY);
 };
 

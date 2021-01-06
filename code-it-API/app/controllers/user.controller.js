@@ -57,9 +57,9 @@ exports.findUser = async (req, res) => {
   };
   let user;
   if (req.query.uid) {
-    user = await User.findByEmail(req.query.uid).catch(onError);
+    user = await User.findByUID(req.query.uid).catch(onError);
   } else if (req.query.email) {
-    user = await User.findByUID(req.query.email).catch(onError);
+    user = await User.findByEmail(req.query.email).catch(onError);
   } else if (req.query.username) {
     user = await User.findByUsername(req.query.username).catch(onError);
   } else {
