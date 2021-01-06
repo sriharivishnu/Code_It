@@ -44,7 +44,10 @@ exports.register = async (req, res) => {
     });
   });
   if (!userRes) return;
-  res.status(200).send({ uid: uid });
+
+  //Create session token
+  const token = jwt.sign({ uid: uid }, process.env.TOKEN_SECRET);
+  res.header("auth-token", token).send(token);
 };
 
 /*
