@@ -2,7 +2,7 @@
 A place for Developers to share
 
 ## code-it-API
-- Contains the code for the Node JS server to handle database operations
+- Backend API that offers a protected endpoint for querying the MySql database.
 
 ## code-it-FrontEnd
-- React Frontend
+- React Frontend for the web application
