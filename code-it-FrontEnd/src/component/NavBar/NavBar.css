@@ -1,8 +1,10 @@
 .NavBarItems {
-  /* background: linear-gradient(90deg, #4958de 0%, #363954 100%); */
-  background: #111115;
+  position: fixed;
+  top: 0;
   height: 75px;
+  width: 100%;
   display: flex;
+  /* display: flex; */
   justify-content: start;
   align-items: center;
   font-size: 1.2rem;
@@ -29,7 +31,7 @@
   display: grid;
   grid-template-columns: repeat(5, auto);
   gap: 5px;
-  width: 70vw;
+  /* width: 70vw; */
   list-style: none;
   text-align: center;
   justify-content: start;
@@ -37,8 +39,9 @@
 }
 
 .account-status {
-  position: absolute;
-  right: 20px;
+  position: relative;
+  margin-left: auto;
+  margin-right: 1rem;
   display: grid;
   grid-template-columns: repeat(2, auto);
   gap: 10px;
@@ -97,7 +100,7 @@
 
   .nav-menu.active {
     display: flex;
-    background: #6668f4;
+    background: #1d1d24;
     left: 50%;
     opacity: 1;
     transition: all 0.5s ease;
@@ -138,7 +141,7 @@
     font-size: 2rem;
     padding: 2px;
     top: 10px;
-    right: 10px;
+    right: 25px;
   }
   .fa-times.close-drawer:hover {
     opacity: 0.5;
@@ -165,7 +168,7 @@
     margin: auto;
     border-radius: 5px;
     width: 80%;
-    background: #4ad9e4;
+    background: #1e5ce3;
     text-decoration: none;
     color: #fff;
     font-size: 1.4rem;
