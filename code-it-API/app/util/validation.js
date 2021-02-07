@@ -1,3 +1,10 @@
+/**
+ * This file contains the validation for different schema.
+ * Uses the Joi library to validate data.
+ * For example, the usernames and password requirements are verified
+ * here.
+ */
+
 const Joi = require("joi");
 
 const registerValidation = (data) => {

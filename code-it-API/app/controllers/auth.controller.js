@@ -4,17 +4,19 @@ const { registerValidation, loginValidation } = require("../util/validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 
-/*
-Create a user in the database
-POST Request 
-{
+/**
+ * Create a user in the database
+ * POST Request : EXAMPLE: 
+ * {
     email: test@gmail.com,
     username:tester,
     password: 123456
-}
-*/
+ * }
+ * @param {*} req 
+ * @param {*} res 
+ */
 exports.register = async (req, res) => {
-  //Validate the request
+  //Validate the request for the given schema
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send({ message: error.details[0].message });
 
@@ -50,20 +52,22 @@ exports.register = async (req, res) => {
   res.header("auth-token", token).send(token);
 };
 
-/*
-Logs in a user given an email or username
-POST request
-email-based
-    {
-        email: test@gmail.com,
-        password: 123456
-    }
-or username-based
-    {
-        username: tester123,
-        password: 123456
-    }
-*/
+/**
+ * Logs in a user given an email or username
+ * POST request
+ * email-based
+ *  {
+ *      email: test@gmail.com,
+ *      password: 123456
+ *  }
+ * or username-based
+ *  {
+ *      username: tester123,
+ *      password: 123456
+ *  }
+ * @param {*} req
+ * @param {*} res
+ */
 exports.login = async (req, res) => {
   //Validate login request
   if (req.body.hasOwnProperty("email") && req.body.hasOwnProperty("username"))
@@ -73,16 +77,29 @@ exports.login = async (req, res) => {
 
   //Get user depending on login method
   let result;
+
+  //If the user is logging in through email
   if (req.body.hasOwnProperty("email")) {
-    result = await User.findByEmail(req.body.email).catch((err) => {
-      res.status(500).send(err);
-    });
-  } else if (req.hasOwnProperty("username")) {
-    result = await User.findByUsername(req.body.username).catch((err) => {
+    result = await User.findByEmail(req.body.email, true).catch((err) => {
       res.status(500).send(err);
     });
   }
-  if (!result) return;
+
+  //If the user is logging in through username
+  else if (req.hasOwnProperty("username")) {
+    result = await User.findByUsername(req.body.username, true).catch((err) => {
+      res.status(500).send(err);
+    });
+  }
+
+  //----- ADD MORE SIGN IN METHODS HERE -----
+
+  //-----------------------------------------
+
+  //Check if there is some connection error server-side
+  if (!result) return res.status(500).send("Internal Server Error");
+
+  //Check if the user exists
   if (!result.length) return res.status(400).send({ message: "User not found" });
   const user = result[0];
 

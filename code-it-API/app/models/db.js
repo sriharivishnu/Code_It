@@ -1,7 +1,7 @@
 const mysql = require("mysql");
-/*
-Mysql Database wrapper to allow for promises
-*/
+/**
+ * mySQL wrapper to support Promises
+ */
 class Database {
   constructor(config) {
     this.connection = mysql.createConnection({
@@ -11,6 +11,9 @@ class Database {
       database: config.DB,
     });
   }
+  /**
+   * Connects to the database.
+   */
   connect() {
     return new Promise((resolve, reject) => {
       this.connection.connect((error) => {
@@ -20,6 +23,11 @@ class Database {
       });
     });
   }
+  /**
+   * Queries the database with a given SQL query
+   * @param {*} sql SQL Query to execute
+   * @param {*} args
+   */
   query(sql, args) {
     return new Promise((resolve, reject) => {
       this.connection.query(sql, args, (err, rows) => {
@@ -28,6 +36,9 @@ class Database {
       });
     });
   }
+  /**
+   * Closes the connection to the database
+   */
   close() {
     return new Promise((resolve, reject) => {
       this.connection.end((err) => {
