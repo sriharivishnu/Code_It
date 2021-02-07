@@ -1,13 +1,17 @@
+@import "../../config";
 .NavBarItems {
   position: fixed;
   top: 0;
-  height: 75px;
+  height: 4rem;
   width: 100%;
   display: flex;
-  /* display: flex; */
+  background-color: rgba($background-color, 1);
   justify-content: start;
   align-items: center;
   font-size: 1.2rem;
+  .transparent {
+    background-color: rgba($background-color, 0);
+  }
 }
 .navbar-logo {
   color: #fff;

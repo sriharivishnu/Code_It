@@ -1,5 +1,5 @@
 import React from "react";
-import "./Showcase.css";
+import "./Showcase.scss";
 import SearchBar from "../SearchBar/";
 const Showcase = () => {
   return (
@@ -7,9 +7,11 @@ const Showcase = () => {
       <h1 className="showcase-title">
         Coder's Block?
         <br /> We'll get you through it. <br />
-        It's time to <span style={{ color: "yellow" }}>Code-It.</span>
+        It's time to <span className="text-highlight">Code-It.</span>
       </h1>
-      <p className="showcase-description">Get inspiration to create the projects of your dreams.</p>
+      <p className="showcase-description">
+        Get the inspiration you need to create the projects of your dreams.
+      </p>
       <SearchBar placeholder="Mobile App etc." />
     </div>
   );

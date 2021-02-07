@@ -1,17 +1,18 @@
+@import "../../config";
+
 .showcase-background {
   display: block;
-  background: #111115;
-  padding-top: 5rem;
+  padding-top: 3rem;
   height: 40rem;
   text-align: center;
-  background: linear-gradient(135deg, #1e5ce3 20%, #241d35 80%);
+  background: linear-gradient(90deg, $primary-color 20%, $background-color 80%);
   background-size: 400%;
   border-radius: 0 0 20% 20%;
-  animation: bg-animation 10s infinite alternate;
+  animation: bg-animation 15s infinite alternate;
 }
 @keyframes bg-animation {
   0% {
-    background-position: left;
+    background-position: 50%;
   }
   100% {
     background-position: right;
@@ -30,6 +31,10 @@
   margin-left: 15%;
   color: white;
   font-size: 1.3rem;
+}
+
+.text-highlight {
+  color: $highlight-color;
 }
 
 @media screen and (max-width: 950px) {

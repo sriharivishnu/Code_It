@@ -9,12 +9,12 @@
   border: none;
   font-family: "Roboto", sans-serif;
   cursor: pointer;
-}
 
-.btn:hover {
-  transition: all 0.3s ease-out;
-  background: #fff;
-  color: #6568f4;
+  &:hover {
+    transition: all 0.3s ease-out;
+    background: #fff;
+    color: #6568f4;
+  }
 }
 
 .btn--primary {
@@ -36,14 +36,14 @@
 
 .btn--medium {
   padding: 8px 20px;
-  border-radius: 4px;
+  border-radius: 5px;
   font-size: 18px;
   color: #fff;
 }
 
 .btn--large {
   padding: 12px 26px;
-  border-radius: 4px;
+  border-radius: 5px;
   font-size: 18px;
   color: #fff;
 }

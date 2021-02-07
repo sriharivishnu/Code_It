@@ -1,23 +1,17 @@
 import React, { useState } from "react";
-import logo from "../../img/logo.png";
+// import logo from "../../img/logo.png";
 import { MenuItems } from "./NavBarItems/MenuBarItems";
 import Button from "../Button/";
-import ModalLogin from "../ModalLogin";
-import "./NavBar.css";
-const NavBar = () => {
+import "./NavBar.scss";
+const NavBar = ({ onClickSignUp, onClickLogin }) => {
   const [clicked, setClicked] = useState(false);
-  const [showModal, setShowModal] = useState(false);
   function handleClick() {
     setClicked(!clicked);
   }
-  const openLogin = () => {
-    console.log(showModal);
-    setShowModal((prev) => !prev);
-  };
 
   return (
     <>
-      <nav className="NavBarItems">
+      <nav className="NavBarItems transparent">
         <a className="navbar-logo" href="/">
           Code-It<i className="fab fa-react"></i>
         </a>
@@ -39,15 +33,14 @@ const NavBar = () => {
           })}
         </ul>
         <div className="account-status">
-          <Button buttonStyle="btn--outline" onClick={openLogin}>
+          <Button buttonStyle="btn--outline" onClick={onClickLogin}>
             <b>Sign In</b>
           </Button>
-          <Button onClick={openLogin}>
+          <Button onClick={onClickSignUp}>
             <b>Sign Up</b>
           </Button>
         </div>
       </nav>
-      {/* <ModalLogin showModal={showModal} setShowModal={setShowModal} /> */}
     </>
   );
 };

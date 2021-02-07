@@ -1,6 +1,6 @@
 import React from "react";
 import Button from "../Button/Button";
-import "./SearchBar.css";
+import "./SearchBar.scss";
 const SearchBar = ({ placeholder }) => {
   return (
     <div className="searchbar-style">

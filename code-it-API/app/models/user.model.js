@@ -53,8 +53,8 @@ User.findByEmail = (email, secure = false) => {
 /**
  * Finds a user by the UID
  * @param {String} userID
- * @param {Boolean} secure True to return protected data like email and password; otherwise false.
- * @returns {Promise} The list of results of the SQL query as a Promise
+ * @param {Boolean} secure  True to return protected data like email and password; otherwise false.
+ * @returns {Promise}       The list of results of the SQL query as a Promise
  */
 User.findByUID = (userID, secure = false) => {
   const QUERY = `${
