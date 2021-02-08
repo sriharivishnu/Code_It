@@ -1,6 +1,5 @@
 import React from "react";
 import "./Showcase.scss";
-import SearchBar from "../SearchBar/";
 const Showcase = () => {
   return (
     <div className="showcase-background">
@@ -12,7 +11,6 @@ const Showcase = () => {
       <p className="showcase-description">
         Get the inspiration you need to create the projects of your dreams.
       </p>
-      <SearchBar placeholder="Mobile App etc." />
     </div>
   );
 };

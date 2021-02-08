@@ -8,5 +8,8 @@
 }
 
 .main {
-  margin-top: 4rem;
+  margin-top: 0rem;
+  &.padded {
+    margin-top: 4rem;
+  }
 }

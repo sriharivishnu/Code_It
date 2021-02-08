@@ -1,0 +1,17 @@
+.home.searchbar {
+  margin-top: 1rem;
+}
+
+@media screen and (max-width: 700px) {
+  .home.searchbar {
+    display: block;
+    margin: auto;
+  }
+  .searchbar-style {
+    display: block;
+    margin-top: 1rem;
+  }
+  .search_button {
+    margin-top: 1rem;
+  }
+}

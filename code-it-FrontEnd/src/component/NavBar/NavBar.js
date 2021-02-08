@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { MenuItems } from "./NavBarItems/MenuBarItems";
 import Button from "../Button/";
 import "./NavBar.scss";
-const NavBar = ({ onClickSignUp, onClickLogin }) => {
+const NavBar = ({ onClickSignUp, onClickLogin, transparent }) => {
   const [clicked, setClicked] = useState(false);
   function handleClick() {
     setClicked(!clicked);
@@ -11,7 +11,7 @@ const NavBar = ({ onClickSignUp, onClickLogin }) => {
 
   return (
     <>
-      <nav className="NavBarItems transparent">
+      <nav className={`NavBarItems ${transparent ? "transparent" : ""}`}>
         <a className="navbar-logo" href="/">
           Code-It<i className="fab fa-react"></i>
         </a>

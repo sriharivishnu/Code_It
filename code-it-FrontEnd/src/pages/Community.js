@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const Community = () => {
+const Community = ({ setPadding }) => {
+  useEffect(() => {
+    setPadding(true);
+  }, [setPadding]);
   return (
     <div>
       <h1>HELLO COMMUNITY</h1>

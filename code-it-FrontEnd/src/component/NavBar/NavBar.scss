@@ -9,7 +9,9 @@
   justify-content: start;
   align-items: center;
   font-size: 1.2rem;
-  .transparent {
+  transition: all 0.2s ease-in;
+
+  &.transparent {
     background-color: rgba($background-color, 0);
   }
 }
@@ -85,7 +87,6 @@
 
 @media screen and (max-width: 900px) {
   .NavBarItems {
-    position: relative;
     justify-content: center;
   }
 

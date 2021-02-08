@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Showcase from "../component/Showcase/Showcase";
-
-const Home = () => {
+import SearchBar from "../component/SearchBar";
+import "./pages.scss";
+const Home = ({ setPadding }) => {
+  useEffect(() => {
+    setPadding(false);
+  }, [setPadding]);
   return (
-    <div className="home-page">
+    <div className="home-page" style={{ textAlign: "center" }}>
       <Showcase />
+      <SearchBar className="home searchbar" placeholder="Mobile App etc." />
     </div>
   );
 };

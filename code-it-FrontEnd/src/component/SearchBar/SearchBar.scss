@@ -4,7 +4,6 @@
 
 .searchbar-input {
   display: inline-block;
-  margin-top: 3rem;
   width: 35%;
   min-width: 20rem;
   padding: 1rem;
@@ -23,19 +22,19 @@
   /* padding: 2rem 1rem 1rem 2rem; */
 }
 
-@media screen and (max-width: 700px) {
-  .searchbar-style {
-    display: block;
-    margin-top: 5rem;
-  }
-  .searchbar-input {
-    margin: auto;
-    margin-top: 1rem;
-    display: block;
-  }
-  .search_button {
-    margin: auto;
-    margin-top: 1rem;
-    display: block;
-  }
-}
+// @media screen and (max-width: 700px) {
+//   .searchbar-style {
+//     display: block;
+//     margin-top: 5rem;
+//   }
+//   .searchbar-input {
+//     margin: auto;
+//     margin-top: 1rem;
+//     display: block;
+//   }
+//   .search_button {
+//     margin: auto;
+//     margin-top: 1rem;
+//     display: block;
+//   }
+// }

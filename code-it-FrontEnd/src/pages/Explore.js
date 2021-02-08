@@ -1,6 +1,9 @@
-import React from "react";
+import React, { useEffect } from "react";
 
-const Explore = () => {
+const Explore = ({ setPadding }) => {
+  useEffect(() => {
+    setPadding(true);
+  }, [setPadding]);
   return <div>EXPLORE</div>;
 };
 
