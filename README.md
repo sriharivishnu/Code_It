@@ -7,4 +7,4 @@ A place for Developers to share
 ## code-it-FrontEnd
 - React Frontend for the web application
 
-<img width="1440" alt="Screen Shot 2021-02-06 at 3 42 37 AM" src="https://user-images.githubusercontent.com/37857112/107113643-3a402a00-682e-11eb-9d8c-ed38bd172280.png">
+<img width="1440" alt="Screen Shot 2021-02-08 at 12 01 16 AM" src="https://user-images.githubusercontent.com/37857112/107177852-d12cf380-69a0-11eb-85c6-6415c4c1ef44.png">
