@@ -6,7 +6,6 @@
   width: 100%;
   display: flex;
   background-color: rgba($background-color, 1);
-  justify-content: start;
   align-items: center;
   font-size: 1.2rem;
   transition: all 0.2s ease-in;
@@ -17,7 +16,6 @@
 }
 .navbar-logo {
   color: #fff;
-  justify-self: start;
   cursor: pointer;
   text-decoration: none;
   font-size: 1.8rem;
@@ -37,10 +35,8 @@
   display: grid;
   grid-template-columns: repeat(5, auto);
   gap: 5px;
-  /* width: 70vw; */
   list-style: none;
   text-align: center;
-  justify-content: start;
   margin-left: 20px;
 }
 

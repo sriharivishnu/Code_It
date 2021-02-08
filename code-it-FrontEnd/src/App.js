@@ -6,7 +6,8 @@ import Community from "./pages/Community";
 
 import ModalDialog from "./component/ModalDialog";
 import React, { useState, useEffect } from "react";
-import { BrowserRouter as Router, Switch, Route, useLocation } from "react-router-dom";
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+import LoginForm from "./component/LoginForm/LoginForm";
 const App = () => {
   const [showDialog, setShowDialog] = useState(false);
   const [padded, setPadded] = useState(false);
@@ -39,7 +40,11 @@ const App = () => {
           onClickSignUp={onClickSignUp}
           transparent={padded ? false : scrollPos < 10}
         />
-        <ModalDialog showModal={showDialog} setShowModal={setShowDialog} />
+        <ModalDialog
+          showModal={showDialog}
+          setShowModal={setShowDialog}
+          Content={<LoginForm setShowModal={setShowDialog} />}
+        />
         <div className={`main ${padded ? "padded" : ""}`}>
           <Switch>
             <Route path="/" exact>

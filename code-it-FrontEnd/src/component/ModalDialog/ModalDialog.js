@@ -1,5 +1,4 @@
 import React, { useRef, useEffect, useCallback } from "react";
-import styled from "styled-components";
 import "./ModalDialog.scss";
 const Background = ({ children }) => {
   return <div className="modal-fade">{children}</div>;
@@ -26,12 +25,14 @@ const ModalDialog = ({ showModal, setShowModal, Content }) => {
     };
     document.addEventListener("mousedown", listener);
     document.addEventListener("touchstart", listener);
+    showModal && (document.body.style.overflow = "hidden");
 
     return () => {
       document.removeEventListener("mousedown", listener);
       document.removeEventListener("touchstart", listener);
+      document.body.style.overflow = "unset";
     };
-  }, [node, closeWindow]);
+  }, [node, closeWindow, showModal]);
 
   return (
     <>
