@@ -5,7 +5,7 @@
   height: 4rem;
   width: 100%;
   display: flex;
-  background-color: rgba($background-color, 1);
+  background-color: rgba($background-color, 0.9);
   align-items: center;
   font-size: 1.2rem;
   transition: all 0.2s ease-in;
@@ -89,7 +89,7 @@
   .nav-menu {
     display: flex;
     flex-direction: column;
-    width: 50vw;
+    width: 100vw;
     height: 100vh;
     margin-left: 0;
     position: absolute;
@@ -102,7 +102,7 @@
   .nav-menu.active {
     display: flex;
     background: #1d1d24;
-    left: 50%;
+    left: 0%;
     opacity: 1;
     transition: all 0.5s ease;
     z-index: 1;
@@ -135,14 +135,16 @@
 
   .fa-times.close-drawer {
     display: block;
-    text-align: end;
+    text-align: start;
+    width: 2rem;
+    margin-bottom: 1rem;
     position: relative;
     cursor: pointer;
     color: #fff;
     font-size: 2rem;
     padding: 2px;
-    top: 10px;
-    right: 25px;
+    top: 1rem;
+    left: 1rem;
   }
   .fa-times.close-drawer:hover {
     opacity: 0.5;

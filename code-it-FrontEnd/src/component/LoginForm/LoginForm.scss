@@ -79,11 +79,14 @@
 .closeButton {
   display: block;
   position: relative;
-  text-align: start;
+  width: 2rem;
   font-size: 2rem;
   cursor: pointer;
   top: 1rem;
   left: 1rem;
+  &:hover {
+    opacity: 0.8;
+  }
 }
 
 .showPassword {

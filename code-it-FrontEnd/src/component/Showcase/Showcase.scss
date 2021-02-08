@@ -51,7 +51,7 @@
 @media screen and (max-width: 700px) {
   .showcase-title {
     font-size: 3.5rem;
-    // margin-top: 2rem;
+    font-size: 10vw;
     margin-left: 5%;
   }
   .showcase-description {
@@ -60,6 +60,7 @@
   }
   .showcase-background {
     border-radius: 0;
-    height: 30rem;
+    height: 50%;
+    padding-bottom: 3rem;
   }
 }
