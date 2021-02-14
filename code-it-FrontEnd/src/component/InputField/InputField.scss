@@ -1,0 +1,24 @@
+@import "../../config";
+
+.inputText {
+  display: block;
+  min-width: 20rem;
+  padding: 0.8rem 1rem 0.8rem 1rem;
+  font-size: 1rem;
+  border-style: none;
+  outline: none;
+  border-radius: 5%/50%;
+  color: rgb(69, 69, 69);
+  max-width: 40rem;
+
+  &.large {
+    padding: 0.9rem 1.2rem;
+    font-size: 1.2rem;
+  }
+  &.medium {
+    font-size: 1rem;
+  }
+  &.small {
+    font-size: 0.8rem;
+  }
+}

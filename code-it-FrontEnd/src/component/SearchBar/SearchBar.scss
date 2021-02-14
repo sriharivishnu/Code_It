@@ -6,9 +6,10 @@
   display: inline-block;
   width: 35%;
   min-width: 20rem;
-  padding: 1rem;
-  font-size: 1rem;
+  padding: 0.9rem 1.2rem;
+  font-size: 1.2rem;
   border-style: none;
+  font-weight: 700;
   outline: none;
   border-radius: 5%/50%;
   color: rgb(69, 69, 69);
@@ -18,7 +19,8 @@
 .search_button {
   margin-left: 1rem;
   border-radius: 25%/50%;
-  padding: 0.95rem 2rem 0.95rem 2rem;
+  padding: 1rem 2rem;
+  font-size: 1.1rem;
   /* padding: 2rem 1rem 1rem 2rem; */
 }
 

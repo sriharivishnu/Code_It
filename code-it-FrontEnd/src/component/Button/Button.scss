@@ -1,3 +1,5 @@
+@import "../../config";
+
 :root {
   --primary: #1e5ce3;
 }
@@ -13,12 +15,15 @@
   &:hover {
     transition: all 0.3s ease-out;
     background: #fff;
-    color: #6568f4;
+    color: $primary-color;
   }
 }
 
 .btn--primary {
   background-color: var(--primary);
+  &.inactive {
+    background-color: $background-color;
+  }
 }
 
 .btn--outline {
@@ -29,9 +34,20 @@
   border-radius: 4px;
   border: 2px solid white;
   transition: all 0.3s ease-out;
+  &:hover {
+    opacity: 1;
+  }
+  &.inactive {
+    background-color: $background-color;
+    opacity: 0.5;
+  }
 }
-.btn--outline:hover {
-  opacity: 1;
+
+.btn--text {
+  background: none;
+  color: #fff;
+  border: none;
+  padding: 0.2rem;
 }
 
 .btn--medium {

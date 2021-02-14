@@ -1,7 +1,6 @@
-@import "../../config";
+@import "../../../config";
 .loginForm {
   width: 100%;
-  margin-top: 3rem;
   display: flex;
   transform: translate(0%, 50%);
   flex-direction: column;
@@ -11,20 +10,17 @@
   justify-content: center;
 }
 
-.inputText {
-  display: block;
-  width: 35%;
-  min-width: 20rem;
-  padding: 1rem;
-  font-size: 1rem;
-  border-style: none;
-  outline: none;
-  border-radius: 5%/50%;
-  color: rgb(69, 69, 69);
-  max-width: 40rem;
-  &.username {
-    margin-top: 0.4rem;
-  }
+.login-logo {
+  margin-top: 3rem;
+  font-size: 3.3rem;
+  color: white;
+}
+
+.username {
+  margin-top: 0.1rem;
+}
+.password {
+  padding-right: 3rem;
 }
 
 .login-button {
@@ -92,7 +88,8 @@
 .showPassword {
   float: right;
   margin-right: 20px;
-  margin-top: -35px;
+  margin-top: -32px;
+  width: 1rem;
   position: relative;
   font-size: 1.2rem;
   cursor: pointer;

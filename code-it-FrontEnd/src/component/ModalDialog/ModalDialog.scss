@@ -5,6 +5,7 @@
   left: 0;
   background-color: rgba($background-color, 0.8);
   color: white;
+  display: none;
   height: 100%;
   width: 100%;
   display: flex;
@@ -14,11 +15,17 @@
 }
 .modal-background {
   background-color: $background-color;
-  opacity: 1;
   color: white;
   position: fixed;
   border-radius: 10px;
   border: white 3px solid;
-  width: 30rem;
-  height: 40rem;
+  width: 0;
+  height: 0;
+  opacity: 0;
+  // transition: all 0.5s ease;
+  &.active {
+    width: 30rem;
+    height: 40rem;
+    opacity: 1;
+  }
 }

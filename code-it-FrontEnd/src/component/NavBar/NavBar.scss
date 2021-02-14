@@ -97,15 +97,15 @@
     left: 100%;
     opacity: 1;
     transition: all 0.5s ease;
-  }
 
-  .nav-menu.active {
-    display: flex;
-    background: #1d1d24;
-    left: 0%;
-    opacity: 1;
-    transition: all 0.5s ease;
-    z-index: 1;
+    &.active {
+      display: flex;
+      background: #1d1d24;
+      left: 0%;
+      opacity: 1;
+      transition: all 0.5s ease;
+      z-index: 1;
+    }
   }
 
   .nav-links {
@@ -113,11 +113,11 @@
     padding: 1rem;
     display: block;
     font-size: 1.4rem;
-  }
 
-  .nav-links:hover {
-    background-color: #7577fa;
-    border-radius: 0;
+    &:hover {
+      background-color: #7577fa;
+      border-radius: 0;
+    }
   }
 
   .menu-icon {
@@ -128,9 +128,9 @@
     transform: translate(-100%, 35%);
     font-size: 1.8rem;
     cursor: pointer;
-  }
-  .menu-icon:hover {
-    opacity: 0.5;
+    &:hover {
+      opacity: 0.5;
+    }
   }
 
   .fa-times.close-drawer {
@@ -145,9 +145,9 @@
     padding: 2px;
     top: 1rem;
     left: 1rem;
-  }
-  .fa-times.close-drawer:hover {
-    opacity: 0.5;
+    &:hover {
+      opacity: 0.5;
+    }
   }
 
   .nav-links.sign-in {
@@ -175,12 +175,11 @@
     text-decoration: none;
     color: #fff;
     font-size: 1.4rem;
-  }
-
-  .nav-links-sign-up:hover {
-    background: #fff;
-    color: #6568f4;
-    transition: 250ms;
+    &:hover {
+      background: #fff;
+      color: #6568f4;
+      transition: 250ms;
+    }
   }
 
   .account-status {

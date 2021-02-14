@@ -5,45 +5,47 @@ import Explore from "./pages/Explore";
 import Community from "./pages/Community";
 
 import ModalDialog from "./component/ModalDialog";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
-import LoginForm from "./component/LoginForm/LoginForm";
+import AuthModal from "./parts/AuthModal/AuthModal";
 const App = () => {
-  const [showDialog, setShowDialog] = useState(false);
+  const [dialogState, setDialogState] = useState({
+    showDialog: false,
+    content: null,
+    closable: true,
+  });
   const [padded, setPadded] = useState(false);
-  const [scrollPos, setScrollPos] = useState(0);
-  const onClickSignUp = () => {
-    setShowDialog(!showDialog);
+  const [loading, setLoading] = useState(false);
+
+  const onDialogState = (state, content = null, closable = true) => {
+    setDialogState({ showDialog: state, content: content, closable: closable });
   };
-  const onClickLogin = () => {
-    setShowDialog(!showDialog);
+  const onClickAuth = (signUp) => {
+    return () => {
+      onDialogState(
+        true,
+        <AuthModal setShowModal={onDialogState} signUp={signUp} setLoading={setLoading} />
+      );
+    };
   };
 
   const setPadding = (bool) => {
     setPadded(bool);
   };
 
-  useEffect(() => {
-    const onScroll = (e) => {
-      setScrollPos(window.pageYOffset);
-    };
-    window.addEventListener("scroll", onScroll);
-    return () => {
-      window.removeEventListener("scroll", onScroll);
-    };
-  });
   return (
     <Router>
       <div className="App">
         <NavBar
-          onClickLogin={onClickLogin}
-          onClickSignUp={onClickSignUp}
-          transparent={padded ? false : scrollPos < 10}
+          onClickLogin={onClickAuth(false)}
+          onClickSignUp={onClickAuth(true)}
+          padded={padded}
         />
         <ModalDialog
-          showModal={showDialog}
-          setShowModal={setShowDialog}
-          Content={<LoginForm setShowModal={setShowDialog} />}
+          showModal={dialogState.showDialog}
+          setShowModal={onDialogState}
+          Content={dialogState.content}
+          closable={dialogState.closable}
         />
         <div className={`main ${padded ? "padded" : ""}`}>
           <Switch>

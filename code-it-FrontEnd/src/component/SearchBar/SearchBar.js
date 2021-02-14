@@ -5,7 +5,7 @@ const SearchBar = ({ placeholder, className }) => {
   return (
     <div className={`searchbar-style`}>
       <input className={`searchbar-input ${className}`} placeholder={placeholder}></input>
-      <Button buttonSize="btn--medium" buttonStyle="btn--primary" className="search_button">
+      <Button buttonSize="btn--large" buttonStyle="btn--primary" className="home search_button">
         Search
       </Button>
     </div>

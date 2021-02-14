@@ -1,7 +1,7 @@
-import React, { useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect, useCallback } from "react";
 import "./ModalDialog.scss";
-const Background = ({ children }) => {
-  return <div className="modal-fade">{children}</div>;
+const Background = ({ children, className }) => {
+  return <div className={`modal-fade ${className}`}>{children}</div>;
 };
 const ModalWindow = ({ className, children, refToAdd }) => {
   return (
@@ -10,7 +10,7 @@ const ModalWindow = ({ className, children, refToAdd }) => {
     </div>
   );
 };
-const ModalDialog = ({ showModal, setShowModal, Content }) => {
+const ModalDialog = ({ showModal, setShowModal, Content, closable = true }) => {
   const node = useRef();
   const closeWindow = useCallback(() => {
     setShowModal(false);
@@ -18,7 +18,7 @@ const ModalDialog = ({ showModal, setShowModal, Content }) => {
 
   useEffect(() => {
     const listener = (event) => {
-      if (!node.current || node.current.contains(event.target)) {
+      if (!node.current || node.current.contains(event.target) || !closable) {
         return;
       }
       closeWindow();
@@ -32,13 +32,16 @@ const ModalDialog = ({ showModal, setShowModal, Content }) => {
       document.removeEventListener("touchstart", listener);
       document.body.style.overflow = "unset";
     };
-  }, [node, closeWindow, showModal]);
+  }, [node, closeWindow, showModal, closable]);
 
   return (
     <>
       {showModal ? (
-        <Background>
-          <ModalWindow className="modal-background" showModal={showModal} refToAdd={node}>
+        <Background className={`${showModal ? "active" : ""}`}>
+          <ModalWindow
+            className={`modal-background ${showModal ? "active" : ""}`}
+            showModal={showModal}
+            refToAdd={node}>
             {Content}
           </ModalWindow>
         </Background>
