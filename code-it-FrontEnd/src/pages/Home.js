@@ -9,7 +9,7 @@ const Home = ({ setPadding }) => {
   return (
     <div className="home-page" style={{ textAlign: "center" }}>
       <Showcase />
-      <SearchBar className="home searchbar" placeholder="Mobile App etc." />
+      <SearchBar className="home searchbar" placeholder="TensorFlow, Mobile App etc." />
     </div>
   );
 };

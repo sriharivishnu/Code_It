@@ -1,22 +1,23 @@
 import SignUpForm from "./SignUpForm";
 import LoginForm from "./LoginForm";
 import React, { useState } from "react";
-const AuthModal = ({ setShowModal, setLoading, signUp = true }) => {
-  const [current, setCurrent] = useState(signUp);
+import { signUpUser, signInUser } from "./AuthLogic";
+const AuthModal = ({ setShowModal, setLoading, signUpFlag = true }) => {
+  const [current, setCurrent] = useState(signUpFlag);
   const goToSignUp = () => setCurrent(true);
   const goToSignIn = () => setCurrent(false);
 
-  const signInUser = (username_or_email, password) => {
+  const signIn = (username_or_email, password) => {
     setLoading(true);
-    // console.log("Log In: ", username_or_email, password);
+    signInUser(username_or_email, password);
   };
-  const signUpUser = (username, password, email) => {
+  const signUp = (username, password, email) => {
     setLoading(true);
-    // console.log("Sign Up: ", username, password, email);
+    signUpUser(username, password, email);
   };
   if (current)
-    return <SignUpForm setShowModal={setShowModal} goToSignIn={goToSignIn} signUp={signUpUser} />;
-  else return <LoginForm setShowModal={setShowModal} goToSignUp={goToSignUp} signIn={signInUser} />;
+    return <SignUpForm setShowModal={setShowModal} goToSignIn={goToSignIn} signUp={signUp} />;
+  else return <LoginForm setShowModal={setShowModal} goToSignUp={goToSignUp} signIn={signIn} />;
 };
 
 export default AuthModal;

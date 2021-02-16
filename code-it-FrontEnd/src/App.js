@@ -24,7 +24,7 @@ const App = () => {
     return () => {
       onDialogState(
         true,
-        <AuthModal setShowModal={onDialogState} signUp={signUp} setLoading={setLoading} />
+        <AuthModal setShowModal={onDialogState} signUpFlag={signUp} setLoading={setLoading} />
       );
     };
   };
