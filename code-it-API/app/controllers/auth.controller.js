@@ -48,7 +48,7 @@ exports.register = async (req, res) => {
   if (!userRes) return;
 
   //Create session token
-  const token = jwt.sign({ uid: uid }, process.env.TOKEN_SECRET);
+  const token = jwt.sign({ uid: user.uid, iat: Date.now() }, process.env.TOKEN_SECRET);
   res.header("auth-token", token).send(token);
 };
 
@@ -108,6 +108,21 @@ exports.login = async (req, res) => {
   if (!authenticated) res.status(401).send({ message: "Incorrect email/username or password" });
 
   //Create session token
-  const token = jwt.sign({ uid: user.uid }, process.env.TOKEN_SECRET);
+  const token = jwt.sign({ uid: user.uid, iat: Date.now() }, process.env.TOKEN_SECRET);
   res.header("auth-token", token).send(token);
+};
+
+exports.refreshToken = async (req, res) => {
+  const { refreshToken } = req.body;
+  if (!refreshToken) return res.status(401).send({ message: "Needs to have a refresh token!" });
+
+  //--- TODO: Check if refresh token is in the white list
+
+  //---
+  let user;
+  try {
+    user = jwt.verify(refreshToken, process.env.TOKEN_SECRET);
+  } catch (error) {
+    return res.status(401).send({ message: "Invalid Refresh token!" });
+  }
 };
