@@ -3,7 +3,6 @@ const User = require("../models/user.model");
 const { registerValidation, loginValidation } = require("../util/validation");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-const { create } = require("../models/user.model");
 
 // 1 hour (3600 seconds)
 const TOKEN_EXPIRES_IN_SECONDS = 60 * 60;
