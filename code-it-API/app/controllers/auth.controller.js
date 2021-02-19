@@ -155,6 +155,16 @@ exports.login = async (req, res) => {
   res.send(tokens);
 };
 
+/**
+ * The endpoint to receive a new access token once its expired. Uses
+ * the refresh token to validate user.
+ * POST request
+ * {
+ *    refresh_token : "xxxxxx..."
+ * }
+ * @param {*} req
+ * @param {*} res
+ */
 exports.token = async (req, res) => {
   const { refresh_token } = req.body;
   if (!refresh_token) return res.status(401).send({ message: "No refresh token found!" });
@@ -186,6 +196,12 @@ exports.token = async (req, res) => {
   return res.status(200).send(tokens);
 };
 
+/**
+ * "Logs out" a user. Mostly a security precaution by deleting
+ * the refresh token of the user from the white list.
+ * @param {*} req
+ * @param {*} res
+ */
 exports.logout = async (req, res) => {
   const { refresh_token } = req.body;
   if (!refresh_token) return res.status(200).send({ message: "No refresh token found" });
