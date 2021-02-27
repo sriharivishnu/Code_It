@@ -9,11 +9,13 @@ Includes:
 Requires you to add a .env file for the database credentials!
 
 Should contain the following information:
-DB_HOST = **\*
-DB_USER = \*\*\*\***
-DB_PASSWORD = \*\*\*\*
-DB_NAME = \*\*\*
+```
+DB_HOST = ***
+DB_USER = ***
+DB_PASSWORD = ***
+DB_NAME = ***
 
-TOKEN_SECRET = **\*\***
+TOKEN_SECRET = ***
+```
 
 Run `npm start` to start the server.
