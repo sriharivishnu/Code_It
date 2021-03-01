@@ -1,0 +1,9 @@
+{
+  "short_name": "Code-It",
+  "name": "Code-It: Developer's Paradise",
+  "icons": [],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#1d1d24"
+}

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 // import logo from "../../img/logo.png";
 import { MenuItems } from "./NavBarItems/MenuBarItems";
-import Button from "../Button/";
+import Button from "../Button";
 import "./NavBar.scss";
 const NavBar = ({ onClickSignUp, onClickLogin, padded }) => {
   const [clicked, setClicked] = useState(false);
