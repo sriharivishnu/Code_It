@@ -4,17 +4,34 @@ const mysql = require("mysql");
  */
 class Database {
   constructor(config) {
-    this.connection = mysql.createConnection({
-      host: config.HOST,
-      user: config.USER,
-      password: config.PASSWORD,
-      database: config.DB,
-    });
+    this.config = config;
   }
   /**
    * Connects to the database.
    */
   connect() {
+    this.connection = mysql.createConnection({
+      host: this.config.HOST,
+      user: this.config.USER,
+      password: this.config.PASSWORD,
+      database: this.config.DB,
+    });
+    this.connection.on("error", (err) => {
+      console.log("db error", err);
+      if (err.code === "PROTOCOL_CONNECTION_LOST") {
+        console.log("Attempting reconnection...");
+        this.connect()
+          .then(() => {
+            console.log("Connected successfully");
+          })
+          .catch((err) => {
+            console.err("Failed to reconnect");
+            throw err;
+          });
+      } else {
+        throw err;
+      }
+    });
     return new Promise((resolve, reject) => {
       this.connection.connect((error) => {
         if (error) reject(error);
@@ -23,6 +40,10 @@ class Database {
       });
     });
   }
+  /**
+   * Handles case where server is disconnected from database
+   */
+  handle_disconnect() {}
   /**
    * Queries the database with a given SQL query
    * @param {*} sql SQL Query to execute
@@ -54,7 +75,11 @@ const database = new Database({
   PASSWORD: process.env.DB_PASSWORD,
   DB: process.env.DB_NAME,
 });
-database.connect();
+try {
+  database.connect();
+} catch (err) {
+  console.error("Failed to connect to database: ", err);
+}
 const getDb = () => {
   return database;
 };

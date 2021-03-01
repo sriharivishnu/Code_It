@@ -4,6 +4,8 @@ services:
     build:
       context: .
       dockerfile: ./frontend/Dockerfile
+    ports:
+      - 80:80
   api:
     build: ./api
     environment:
