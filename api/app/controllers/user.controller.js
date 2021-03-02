@@ -13,17 +13,22 @@ exports.findUser = async (req, res) => {
     !req.query.hasOwnProperty("uid") &&
     !req.query.hasOwnProperty("username")
   ) {
-    return res.status(400).send("Bad Request: Missing query parameters");
+    return res.status(400).send({ error: "Bad Request: Missing query parameters" });
   }
 
   //Find the user using the public method
-  const user_res = await User.findUserPublic(req.query, (err) => res.status(500).send(err));
+  let user_res;
+  try {
+    await User.findUserPublic(req.query, (err) => res.status(500).send(err));
+  } catch (err) {
+    return res.status(500).send({ message: "Error while attempting to find user", error: err });
+  }
 
   //Internal server error. MySQL connection failure maybe?
-  if (!user_res) return res.status(500).send("User Request Failed");
+  if (!user_res) return res.status(500).send({ error: "User Request Failed" });
 
   //User was not found: results array was empty
-  if (!user_res.length) return res.status(404).send({ message: "User not found" });
+  if (!user_res.length) return res.status(404).send({ error: "User not found" });
 
   return res.status(200).send(user_res[0]);
 };

@@ -57,7 +57,7 @@ function createTokens(uid) {
 exports.register = async (req, res) => {
   //Validate the request for the given schema
   const { error } = registerValidation(req.body);
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error) return res.status(400).send({ error: error.details[0].message });
 
   //Compute hashed password
   let hashed, salt;
@@ -65,7 +65,7 @@ exports.register = async (req, res) => {
     salt = await bcrypt.genSalt(12);
     hashed = await bcrypt.hash(req.body.password, salt);
   } catch (e) {
-    return res.status(500).send({ message: "Internal Server Error", error: e });
+    return res.status(500).send({ error: "Internal Server Error during registration", error: e });
   }
   req.body.password = hashed;
 
@@ -77,15 +77,16 @@ exports.register = async (req, res) => {
     username: req.body.username,
     hashed_password: hashed,
   });
-
   //Try creating the user
-  const userRes = await User.create(newUser).catch((err) => {
-    res.status(500).send({
-      message: err.message || "Internal Server Error while Creating User",
+  let userRes;
+  try {
+    userRes = await User.create(newUser);
+  } catch (err) {
+    return res.status(409).send({
+      error: { code: err.code, message: err.sqlMessage },
     });
-  });
-  if (!userRes) return;
-
+  }
+  if (!userRes) return res.status(500).send({ error: "Unknown error occurred" });
   //Create session token + refresh token
   const tokens = createTokens(newUser.uid);
   res.send(tokens);
@@ -110,27 +111,25 @@ exports.register = async (req, res) => {
 exports.login = async (req, res) => {
   //Validate login request
   if (req.body.hasOwnProperty("email") && req.body.hasOwnProperty("username"))
-    return res.status(400).send({ message: "Cannot login with both username and email" });
+    return res.status(400).send({ error: "Cannot login with both username and email" });
   const { error } = loginValidation(req.body);
-  if (error) return res.status(400).send({ message: error.details[0].message });
+  if (error) return res.status(400).send({ error: error.details[0].message });
 
   //Get user depending on login method
   let result;
 
   //If the user is logging in through email
-  if (req.body.hasOwnProperty("email")) {
-    result = await User.findByEmail(req.body.email, true).catch((err) => {
-      res.status(500).send(err);
-    });
-  }
+  try {
+    if (req.body.hasOwnProperty("email")) {
+      result = await User.findByEmail(req.body.email, true);
+    }
 
-  //If the user is logging in through username
-  else if (req.body.hasOwnProperty("username")) {
-    result = await User.findByUsername(req.body.username, true).catch((err) => {
-      res.status(500).send(err);
-    });
-  } else {
-    return res.status(400).send({ message: "Unknown formatting error" });
+    //If the user is logging in through username
+    else if (req.body.hasOwnProperty("username")) {
+      result = await User.findByUsername(req.body.username, true);
+    }
+  } catch (err) {
+    res.status(500).send({ error: err.code || err });
   }
 
   //----- ADD MORE SIGN IN METHODS HERE -----
@@ -138,15 +137,15 @@ exports.login = async (req, res) => {
   //-----------------------------------------
 
   //Check if there is some connection error server-side
-  if (!result) return res.status(500).send({ message: "Internal Server Error" });
+  if (!result) return res.status(500).send({ error: "Internal Server Error" });
 
   //Check if the user exists
-  if (!result.length) return res.status(400).send({ message: "User not found" });
+  if (!result.length) return res.status(400).send({ error: "User not found" });
   const user = result[0];
 
   //Check if passwords match
   let authenticated = await bcrypt.compare(req.body.password, user.password_hash);
-  if (!authenticated) res.status(401).send({ message: "Incorrect email/username or password" });
+  if (!authenticated) res.status(401).send({ error: "Incorrect email/username or password" });
 
   //Create access token + refresh token
   const tokens = createTokens(user.uid);
@@ -167,7 +166,7 @@ exports.login = async (req, res) => {
  */
 exports.token = async (req, res) => {
   const { refresh_token } = req.body;
-  if (!refresh_token) return res.status(401).send({ message: "No refresh token found!" });
+  if (!refresh_token) return res.status(401).send({ error: "No refresh token found!" });
 
   //--- TODO: Check if refresh token is in the white list
 
@@ -178,9 +177,9 @@ exports.token = async (req, res) => {
   try {
     decoded = jwt.verify(refresh_token, process.env.TOKEN_SECRET);
   } catch (error) {
-    return res.status(401).send({ message: "Invalid Refresh token!" });
+    return res.status(401).send({ error: "Invalid Refresh token!" });
   }
-  if (!decoded.uid) return res.status(500).send({ message: "Token has invalid contents" });
+  if (!decoded.uid) return res.status(500).send({ error: "Token has invalid contents" });
   let tokens;
 
   //Check if refresh token is about to expire - send refresh and access
@@ -204,7 +203,7 @@ exports.token = async (req, res) => {
  */
 exports.logout = async (req, res) => {
   const { refresh_token } = req.body;
-  if (!refresh_token) return res.status(200).send({ message: "No refresh token found" });
+  if (!refresh_token) return res.status(200).send({ error: "No refresh token found" });
 
   // ---  Delete refresh_token from whitelist here
 

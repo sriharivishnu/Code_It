@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import InputField from "../../../component/InputField";
 import Button from "../../../component/Button";
 import "./SignUpForm.scss";
-const SignUpForm = ({ setShowModal, goToSignIn, signUp }) => {
+const SignUpForm = ({ setShowModal, goToSignIn, signUpUser }) => {
   const [showPassword, setShowPassword] = useState(false);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -10,7 +10,7 @@ const SignUpForm = ({ setShowModal, goToSignIn, signUp }) => {
 
   const onSubmit = (ev) => {
     ev.preventDefault();
-    signUp(username, password, email);
+    signUpUser(username, password, email);
     return false;
   };
   const togglePassword = () => {

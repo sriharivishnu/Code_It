@@ -1,5 +1,5 @@
 const Config = {
-  backend_api_url: "http://localhost:4000",
+  backend_api_url: "/api/",
 };
 
 export default Config;
