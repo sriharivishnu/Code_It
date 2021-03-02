@@ -2,7 +2,7 @@
 
 The frontend React application for the Code It website.
 
-Run npm start to start the application.
+Run `npm start` to start the application.
 
 ## Homepage
 
