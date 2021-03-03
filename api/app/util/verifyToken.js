@@ -9,8 +9,10 @@ const jwt = require("jsonwebtoken");
  */
 function verifyAuth(req, res, next) {
   //Ensure that there is a token in the header
-  const token = req.header("auth-token");
+  let token = req.header("Authorization");
   if (!token) return res.status(401).send({ message: "Access Denied: Please login" });
+  //Bearer token
+  token = token.substring(7);
 
   //Try verifying the token using the TOKEN SECRET
   try {

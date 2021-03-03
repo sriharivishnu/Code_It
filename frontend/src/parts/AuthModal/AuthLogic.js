@@ -1,4 +1,4 @@
-import Config from "../../config";
+import { post } from "../../utils/fetch-wrapper";
 const signInUser = (username_or_email, password) => {
   const data = username_or_email.includes("@")
     ? {
@@ -9,23 +9,14 @@ const signInUser = (username_or_email, password) => {
         username: username_or_email,
         password: password,
       };
-  fetch(Config.backend_api_url + "auth/signin", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      cache: "no-cache",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      console.log(res);
+  post("/auth/signin", data)
+    .then((response) => {
+      console.log(response);
+      localStorage.setItem("access_token", response.access_token);
+      localStorage.setItem("refresh_token", response.refresh_token);
     })
     .catch((err) => {
-      console.log("Error when signing in user ", err);
+      console.error(err);
     });
 };
 
@@ -35,25 +26,15 @@ const signUpUser = (username, password, email) => {
     email: email,
     password: password,
   };
-  fetch(Config.backend_api_url + "auth/register", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Content-Type": "application/json",
-      cache: "no-cache",
-    },
-    body: JSON.stringify(data),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      console.log(res);
+  post("/auth/register", data)
+    .then((response) => {
+      localStorage.setItem("access_token", response.access_token);
+      localStorage.setItem("refresh_token", response.refresh_token);
+      console.log(response);
     })
     .catch((err) => {
-      console.error("Error when signing up user ", err);
+      console.error(err);
     });
 };
 
-export { signInUser };
-export { signUpUser };
+export { signInUser, signUpUser };
