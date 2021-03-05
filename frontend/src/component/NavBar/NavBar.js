@@ -23,7 +23,7 @@ const NavBar = ({ onClickSignUp, onClickLogin, padded }) => {
 
   return (
     <>
-      <nav className={`NavBarItems ${padded || scrollPos < 10 ? "transparent" : ""}`}>
+      <nav className={`NavBarItems ${padded ? "" : scrollPos < 10 ? "transparent" : ""}`}>
         <a className="navbar-logo" href="/">
           Code-It<i className="fab fa-react"></i>
         </a>

@@ -3,6 +3,7 @@ import NavBar from "./component/NavBar";
 import Home from "./pages/Home";
 import Explore from "./pages/Explore";
 import Community from "./pages/Community";
+import Contribute from "./pages/Contribute";
 
 import ModalDialog from "./component/ModalDialog";
 import React, { useState } from "react";
@@ -57,6 +58,9 @@ const App = () => {
             </Route>
             <Route path="/community">
               <Community setPadding={setPadding} />
+            </Route>
+            <Route path="/contribute">
+              <Contribute setPadding={setPadding} />
             </Route>
           </Switch>
         </div>
