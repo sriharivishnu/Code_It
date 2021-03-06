@@ -1,7 +1,7 @@
 FROM node:14.16.0-alpine3.10 as build-stage
 WORKDIR /usr/src/frontend/
 COPY ./package*.json ./
-RUN npm install --production
+RUN npm install --production --silent
 COPY . .
 RUN npm run build
 

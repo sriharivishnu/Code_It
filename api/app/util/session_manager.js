@@ -27,6 +27,12 @@ function verifyAuth(req, res, next) {
  */
 function useSession(app, options) {
   const redisSessionStore = redis.createClient(options);
+  redisSessionStore.on("error", () => {
+    console.error("Redis Session is offline");
+  });
+  redisSessionStore.on("connect", () => {
+    console.log("Successfully connected to Redis Session Server.");
+  });
   app.use(
     session({
       secret: process.env.TOKEN_SECRET,

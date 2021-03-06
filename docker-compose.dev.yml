@@ -2,8 +2,8 @@ version: "3.9"
 services:
   frontend:
     build:
-      context: .
-      dockerfile: ./frontend/Dockerfile.dev
+      context: ./frontend
+      dockerfile: ./Dockerfile.dev
     ports:
       - 80:3000
     depends_on:
