@@ -1,58 +1,19 @@
 const { v1: uuidv1 } = require("uuid");
 const User = require("../models/user.model");
 const { registerValidation, loginValidation } = require("../util/validation");
-const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
-
-// 1 hour (3600 seconds)
-const TOKEN_EXPIRES_IN_SECONDS = 60 * 60;
-
-// 365 Days
-const REFRESH_TOKEN_EXPIRES_IN_SECONDS = 60 * 60 * 24 * 365;
-
-// Replace the refresh token when it is a week away from expiry
-const REPLACE_REFRESH_TOKEN_WHEN_X_SECONDS_AWAY = 60 * 60 * 24 * 7;
-
-/**
- * Creates just the access token for a user
- * @param {String} uid The UID of the user
- */
-function createSessionToken(uid) {
-  //Create session token
-  const token = jwt.sign({ uid: uid }, process.env.TOKEN_SECRET, {
-    expiresIn: TOKEN_EXPIRES_IN_SECONDS,
-  });
-  return token;
-}
-
-/**
- * Creates an access token and a refresh token
- * @param {String} uid The UID of the user
- */
-function createTokens(uid) {
-  //Create session token
-  const token = createSessionToken(uid);
-  //Create the refresh token
-  const refresh_token = jwt.sign(
-    {
-      uid: uid,
-    },
-    process.env.TOKEN_SECRET,
-    { expiresIn: REFRESH_TOKEN_EXPIRES_IN_SECONDS }
-  );
-  return { access_token: token, refresh_token: refresh_token };
-}
 
 /**
  * Create a user in the database
- * POST Request : EXAMPLE: 
+ * POST Request : EXAMPLE:
  * {
-    email: test@gmail.com,
-    username:tester,
-    password: 123456
+ *  email: test@gmail.com,
+ *  username:tester,
+ *  password: 123456
  * }
- * @param {*} req 
- * @param {*} res 
+ * Responses: 200, 400, 401, 409, 500
+ * @param {*} req
+ * @param {*} res
  */
 exports.register = async (req, res) => {
   //Validate the request for the given schema
@@ -86,9 +47,12 @@ exports.register = async (req, res) => {
     });
   }
   if (!userRes) return res.status(500).send({ error: "Unknown error occurred" });
-  //Create session token + refresh token
-  const tokens = createTokens(newUser.uid);
-  res.send(tokens);
+
+  //Create session token
+  req.session.regenerate(() => {
+    req.session.user = newUser.uid;
+    res.status(200).send({ message: "Authentication Successful" });
+  });
 };
 
 /**
@@ -104,6 +68,7 @@ exports.register = async (req, res) => {
  *      username: tester123,
  *      password: 123456
  *  }
+ * Responses: 200, 400, 401, 500
  * @param {*} req
  * @param {*} res
  */
@@ -128,7 +93,9 @@ exports.login = async (req, res) => {
       result = await User.findByUsername(req.body.username, true);
     }
   } catch (err) {
-    res.status(500).send({ error: err.code || err });
+    return res
+      .status(500)
+      .send({ error: err.code || err || "Unknown Error Occurred during login" });
   }
 
   //----- ADD MORE SIGN IN METHODS HERE -----
@@ -144,68 +111,37 @@ exports.login = async (req, res) => {
 
   //Check if passwords match
   let authenticated = await bcrypt.compare(req.body.password, user.password_hash);
-  if (!authenticated) res.status(401).send({ error: "Incorrect email/username or password" });
+  if (!authenticated)
+    return res.status(401).send({ error: "Incorrect email/username or password" });
 
-  //Create access token + refresh token
-  const tokens = createTokens(user.uid);
-
-  //Send the response to the user
-  res.send(tokens);
+  //Create session token
+  req.session.regenerate(() => {
+    req.session.user = user.uid;
+    res.status(200).send({ message: "Authentication Successful" });
+  });
 };
 
 /**
- * The endpoint to receive a new access token once its expired. Uses
- * the refresh token to validate user.
- * POST request
- * {
- *    refresh_token : "xxxxxx..."
- * }
- * @param {*} req
- * @param {*} res
- */
-exports.token = async (req, res) => {
-  const { refresh_token } = req.body;
-  if (!refresh_token) return res.status(401).send({ error: "No refresh token found!" });
-
-  //--- TODO: Check if refresh token is in the white list
-
-  //---
-
-  //Decode the JWT
-  let decoded;
-  try {
-    decoded = jwt.verify(refresh_token, process.env.TOKEN_SECRET);
-  } catch (error) {
-    return res.status(401).send({ error: "Invalid Refresh token!" });
-  }
-  if (!decoded.uid) return res.status(500).send({ error: "Token has invalid contents" });
-  let tokens;
-
-  //Check if refresh token is about to expire - send refresh and access
-  if (decoded.exp < Date.now() / 1000 + REPLACE_REFRESH_TOKEN_WHEN_X_SECONDS_AWAY) {
-    tokens = createTokens(decoded.uid);
-  }
-
-  //Only send back an access token
-  else {
-    tokens = { access_token: createSessionToken(decoded.uid) };
-  }
-
-  return res.status(200).send(tokens);
-};
-
-/**
- * "Logs out" a user. Mostly a security precaution by deleting
- * the refresh token of the user from the white list.
+ * "Logs out" a user. Deletes their session token
+ * from the session database.
+ * Responses: 200, 401
  * @param {*} req
  * @param {*} res
  */
 exports.logout = async (req, res) => {
-  const { refresh_token } = req.body;
-  if (!refresh_token) return res.status(200).send({ error: "No refresh token found" });
+  if (!req.session) return res.status(401).send("Not Logged in");
+  req.session.destroy(() => {
+    return res.status(200).send({ message: "Successfully logged out" });
+  });
+};
 
-  // ---  Delete refresh_token from whitelist here
-
-  // -----------
-  return res.status(200).send({ message: "Successfully logged out" });
+/**
+ * Checks the login status of a user.
+ * Responses: 200
+ * @param {*} req
+ * @param {*} res
+ */
+exports.loginStatus = async (req, res) => {
+  if (!req.session) res.status(200).send({ status: false });
+  else if (req.session.user) res.status(200).send({ status: true });
 };

@@ -19,7 +19,7 @@ exports.findUser = async (req, res) => {
   //Find the user using the public method
   let user_res;
   try {
-    await User.findUserPublic(req.query, (err) => res.status(500).send(err));
+    user_res = await User.findUserPublic(req.query, (err) => res.status(500).send(err));
   } catch (err) {
     return res.status(500).send({ message: "Error while attempting to find user", error: err });
   }

@@ -1,8 +1,8 @@
 FROM node:14.16.0-alpine3.10 as build-stage
 WORKDIR /usr/src/frontend/
-COPY ./frontend/package*.json ./
+COPY ./package*.json ./
 RUN npm install --production
-COPY ./frontend/ .
+COPY . .
 RUN npm run build
 
 FROM nginx:alpine as production-stage
