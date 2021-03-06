@@ -5,6 +5,7 @@ const mysql = require("mysql");
 class Database {
   constructor(config) {
     this.config = config;
+    this.connection = null;
   }
   /**
    * Connects to the database.
@@ -26,6 +27,9 @@ class Database {
           })
           .catch((err) => {
             console.err("Failed to reconnect");
+            try {
+              this.connection.close();
+            } catch (e) {}
             throw err;
           });
       } else {
@@ -34,8 +38,8 @@ class Database {
     });
     return new Promise((resolve, reject) => {
       this.connection.connect((error) => {
-        if (error) reject(error);
-        console.log("Successfully connected to database");
+        if (error) return reject(error);
+        console.log("Successfully connected to MySQL database");
         resolve();
       });
     });
@@ -62,9 +66,10 @@ class Database {
    */
   close() {
     return new Promise((resolve, reject) => {
+      if (!this.connection) resolve(true);
       this.connection.end((err) => {
         if (err) return reject(err);
-        resolve();
+        resolve(true);
       });
     });
   }
@@ -75,13 +80,5 @@ const database = new Database({
   PASSWORD: process.env.DB_PASSWORD,
   DB: process.env.DB_NAME,
 });
-try {
-  database.connect();
-} catch (err) {
-  console.error("Failed to connect to database: ", err);
-}
-const getDb = () => {
-  return database;
-};
 module.exports = database;
 // exports.getDb = getDb;

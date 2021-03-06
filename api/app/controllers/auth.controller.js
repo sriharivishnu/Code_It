@@ -58,14 +58,13 @@ exports.register = async (req, res) => {
   //Validate the request for the given schema
   const { error } = registerValidation(req.body);
   if (error) return res.status(400).send({ error: error.details[0].message });
-
   //Compute hashed password
   let hashed, salt;
   try {
     salt = await bcrypt.genSalt(12);
     hashed = await bcrypt.hash(req.body.password, salt);
   } catch (e) {
-    return res.status(500).send({ error: "Internal Server Error during registration", error: e });
+    return res.status(500).send({ message: "Internal Server Error during registration", error: e });
   }
   req.body.password = hashed;
 
@@ -83,7 +82,7 @@ exports.register = async (req, res) => {
     userRes = await User.create(newUser);
   } catch (err) {
     return res.status(409).send({
-      error: { code: err.code, message: err.sqlMessage },
+      error: { code: err.code, message: err.sqlMessage || "Unknown error occurred" },
     });
   }
   if (!userRes) return res.status(500).send({ error: "Unknown error occurred" });

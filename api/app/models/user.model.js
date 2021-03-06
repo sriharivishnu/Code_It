@@ -1,4 +1,4 @@
-const sql = require("./db");
+const sql = require("../util/db-client");
 const USERS_TABLE = "users";
 const SELECT_USER_SECURE = "SELECT BIN_TO_UUID(uid) AS uid, username, email, password_hash";
 const SELECT_USER_PUBLIC = "SELECT BIN_TO_UUID(uid) AS uid, username";

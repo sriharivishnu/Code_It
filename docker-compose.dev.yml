@@ -3,9 +3,9 @@ services:
   frontend:
     build:
       context: .
-      dockerfile: ./frontend/Dockerfile
+      dockerfile: ./frontend/Dockerfile.dev
     ports:
-      - 80:80
+      - 80:3000
     depends_on:
       - api
   api:
@@ -18,7 +18,7 @@ services:
       - TOKEN_SECRET=${TOKEN_SECRET}
       - REDIS_PASSWORD=${REDIS_PASSWORD}
       - PORT=4000
-      - NODE_ENV=production
+      - NODE_ENV=development
     expose:
       - 4000
     depends_on:

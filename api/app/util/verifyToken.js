@@ -3,6 +3,7 @@ const jwt = require("jsonwebtoken");
 /**
  * Middleware to ensure user is authenticated when accessing
  * protected routes
+ * Responses: 403 - Invalid token
  * @param {*} req
  * @param {*} res
  * @param {*} next
