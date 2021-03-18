@@ -1,5 +1,5 @@
 const User = require("../models/user.model");
-
+const { login } = require("./auth.controller");
 /**
  * Find User given the parameters: UID, email, or username
  * GET request
@@ -21,7 +21,7 @@ exports.findUser = async (req, res) => {
   try {
     user_res = await User.findUserPublic(req.query, (err) => res.status(500).send(err));
   } catch (err) {
-    return res.status(500).send({ message: "Error while attempting to find user", error: err });
+    return res.status(500).send({ error: "Error while attempting to find user", error: err });
   }
 
   //Internal server error. MySQL connection failure maybe?
@@ -36,6 +36,32 @@ exports.findUser = async (req, res) => {
 exports.updateByUID = (req, res) => {
   res.status(404).send("HELLO");
 };
-exports.deleteByUID = (req, res) => {
-  res.status(404).send("HELLO");
+
+/**
+ * Endpoint to query which user is currently signed in
+ * Currently untested
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+exports.userSignedIn = (req, res) => {
+  return res.status(200).send(req.session.user);
+};
+
+/**
+ * Probably won't work currently
+ * Also currently untested
+ * @param {*} req
+ * @param {*} res
+ * @returns
+ */
+exports.deleteByUID = async (req, res) => {
+  if (!req.body.hasOwnProperty("uid")) {
+    return res.status(400).send({ error: "Missing property UID for delete user!" });
+  }
+  const login_result = login(req, res);
+  if (login_result.status != 200) return login_result;
+  let result = await User.deleteByUID(req.query.uid);
+  if (!result.length) return res.status(500).send("User deletion failed");
+  else return res.status(200).send("User deleted successfully");
 };
